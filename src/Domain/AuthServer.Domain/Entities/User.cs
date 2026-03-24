@@ -39,4 +39,6 @@ public sealed class User
     public ICollection<UserRole> UserRoles { get; set; } = new List<UserRole>();
 
     public ICollection<UserClaim> Claims { get; set; } = new List<UserClaim>();
+
+    public ICollection<RefreshToken> RefreshTokens { get; set; } = new List<RefreshToken>();
 }

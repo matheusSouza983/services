@@ -15,7 +15,10 @@ public static class DependencyInjection
         services.AddDbContext<AuthDbContext>(options =>
             options.UseSqlite(connectionString));
 
+        services.Configure<Auth.JwtOptions>(configuration.GetSection(Auth.JwtOptions.SectionName));
+
         services.AddSingleton<Security.IUserPasswordHasher, Security.UserPasswordHasher>();
+        services.AddScoped<Application.Auth.IAuthService, Auth.AuthService>();
 
         services.AddScoped<Application.Health.IHealthService, Health.HealthService>();
 
