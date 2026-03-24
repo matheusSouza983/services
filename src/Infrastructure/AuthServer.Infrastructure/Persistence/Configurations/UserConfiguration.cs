@@ -19,11 +19,41 @@ public sealed class UserConfiguration : IEntityTypeConfiguration<User>
             .HasMaxLength(255)
             .IsRequired();
 
+        builder.Property(current => current.EmailVerified)
+            .IsRequired();
+
+        builder.Property(current => current.PhoneNumber)
+            .HasMaxLength(30);
+
+        builder.Property(current => current.PhoneNumberVerified)
+            .IsRequired();
+
         builder.Property(current => current.PasswordHash)
             .HasMaxLength(500)
             .IsRequired();
 
+        builder.Property(current => current.PasswordLastChangedUtc);
+
+        builder.Property(current => current.IsLocked)
+            .IsRequired();
+
+        builder.Property(current => current.LockoutEndUtc);
+
+        builder.Property(current => current.MfaEnabled)
+            .IsRequired();
+
+        builder.Property(current => current.TotpSecret)
+            .HasMaxLength(200);
+
+        builder.Property(current => current.AttributesJson)
+            .HasColumnType("TEXT");
+
+        builder.Property(current => current.LastLoginUtc);
+
         builder.Property(current => current.CreatedAtUtc)
+            .IsRequired();
+
+        builder.Property(current => current.UpdatedAtUtc)
             .IsRequired();
 
         builder.HasIndex(current => current.UserName)
