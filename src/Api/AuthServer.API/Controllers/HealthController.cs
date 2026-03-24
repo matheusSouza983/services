@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using AuthServer.Application.ApiResponses;
 using AuthServer.Application.Health;
 
 namespace AuthServer.API.Controllers;
@@ -15,6 +16,10 @@ public sealed class HealthController : ControllerBase
     }
 
     [HttpGet]
+    [ProducesResponseType(typeof(ApiResponse<HealthResult>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ValidationErrorResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Get()
     {
         var result = await _health.GetHealthAsync();
