@@ -1,0 +1,34 @@
+C:\Users\matheus.jsouza\Desktop\new project\src\Infrastructure\AuthServer.Infrastructure\bin\Debug\net10.0\AuthServer.Infrastructure.deps.json
+C:\Users\matheus.jsouza\Desktop\new project\src\Infrastructure\AuthServer.Infrastructure\bin\Debug\net10.0\AuthServer.Infrastructure.dll
+C:\Users\matheus.jsouza\Desktop\new project\src\Infrastructure\AuthServer.Infrastructure\bin\Debug\net10.0\AuthServer.Infrastructure.pdb
+C:\Users\matheus.jsouza\Desktop\new project\src\Infrastructure\AuthServer.Infrastructure\obj\Debug\net10.0\AuthServer.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\matheus.jsouza\Desktop\new project\src\Infrastructure\AuthServer.Infrastructure\obj\Debug\net10.0\AuthServer.Infrastructure.AssemblyInfoInputs.cache
+C:\Users\matheus.jsouza\Desktop\new project\src\Infrastructure\AuthServer.Infrastructure\obj\Debug\net10.0\AuthServer.Infrastructure.AssemblyInfo.cs
+C:\Users\matheus.jsouza\Desktop\new project\src\Infrastructure\AuthServer.Infrastructure\obj\Debug\net10.0\AuthServer.Infrastructure.csproj.CoreCompileInputs.cache
+C:\Users\matheus.jsouza\Desktop\new project\src\Infrastructure\AuthServer.Infrastructure\obj\Debug\net10.0\AuthServer.Infrastructure.dll
+C:\Users\matheus.jsouza\Desktop\new project\src\Infrastructure\AuthServer.Infrastructure\obj\Debug\net10.0\refint\AuthServer.Infrastructure.dll
+C:\Users\matheus.jsouza\Desktop\new project\src\Infrastructure\AuthServer.Infrastructure\obj\Debug\net10.0\AuthServer.Infrastructure.pdb
+C:\Users\matheus.jsouza\Desktop\new project\src\Infrastructure\AuthServer.Infrastructure\obj\Debug\net10.0\ref\AuthServer.Infrastructure.dll
+C:\Users\matheus.jsouza\Desktop\new project\src\Infrastructure\AuthServer.Infrastructure\bin\Debug\net10.0\AuthServer.Application.dll
+C:\Users\matheus.jsouza\Desktop\new project\src\Infrastructure\AuthServer.Infrastructure\bin\Debug\net10.0\AuthServer.Domain.dll
+C:\Users\matheus.jsouza\Desktop\new project\src\Infrastructure\AuthServer.Infrastructure\bin\Debug\net10.0\AuthServer.Application.pdb
+C:\Users\matheus.jsouza\Desktop\new project\src\Infrastructure\AuthServer.Infrastructure\bin\Debug\net10.0\AuthServer.Domain.pdb
+C:\Users\matheus.jsouza\Desktop\new project\src\Infrastructure\AuthServer.Infrastructure\obj\Debug\net10.0\AuthServer.Infrastructure.csproj.AssemblyReference.cache
+C:\Users\matheus.jsouza\Desktop\new project\src\Infrastructure\AuthServer.Infrastructure\obj\Debug\net10.0\AuthServ.751D4C75.Up2Date
+C:\Users\matheus.jsouza\Desktop\services\src\Infrastructure\AuthServer.Infrastructure\bin\Debug\net10.0\AuthServer.Infrastructure.deps.json
+C:\Users\matheus.jsouza\Desktop\services\src\Infrastructure\AuthServer.Infrastructure\bin\Debug\net10.0\AuthServer.Infrastructure.dll
+C:\Users\matheus.jsouza\Desktop\services\src\Infrastructure\AuthServer.Infrastructure\bin\Debug\net10.0\AuthServer.Infrastructure.pdb
+C:\Users\matheus.jsouza\Desktop\services\src\Infrastructure\AuthServer.Infrastructure\bin\Debug\net10.0\AuthServer.Application.dll
+C:\Users\matheus.jsouza\Desktop\services\src\Infrastructure\AuthServer.Infrastructure\bin\Debug\net10.0\AuthServer.Domain.dll
+C:\Users\matheus.jsouza\Desktop\services\src\Infrastructure\AuthServer.Infrastructure\bin\Debug\net10.0\AuthServer.Application.pdb
+C:\Users\matheus.jsouza\Desktop\services\src\Infrastructure\AuthServer.Infrastructure\bin\Debug\net10.0\AuthServer.Domain.pdb
+C:\Users\matheus.jsouza\Desktop\services\src\Infrastructure\AuthServer.Infrastructure\obj\Debug\net10.0\AuthServer.Infrastructure.csproj.AssemblyReference.cache
+C:\Users\matheus.jsouza\Desktop\services\src\Infrastructure\AuthServer.Infrastructure\obj\Debug\net10.0\AuthServer.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\matheus.jsouza\Desktop\services\src\Infrastructure\AuthServer.Infrastructure\obj\Debug\net10.0\AuthServer.Infrastructure.AssemblyInfoInputs.cache
+C:\Users\matheus.jsouza\Desktop\services\src\Infrastructure\AuthServer.Infrastructure\obj\Debug\net10.0\AuthServer.Infrastructure.AssemblyInfo.cs
+C:\Users\matheus.jsouza\Desktop\services\src\Infrastructure\AuthServer.Infrastructure\obj\Debug\net10.0\AuthServer.Infrastructure.csproj.CoreCompileInputs.cache
+C:\Users\matheus.jsouza\Desktop\services\src\Infrastructure\AuthServer.Infrastructure\obj\Debug\net10.0\AuthServ.751D4C75.Up2Date
+C:\Users\matheus.jsouza\Desktop\services\src\Infrastructure\AuthServer.Infrastructure\obj\Debug\net10.0\AuthServer.Infrastructure.dll
+C:\Users\matheus.jsouza\Desktop\services\src\Infrastructure\AuthServer.Infrastructure\obj\Debug\net10.0\refint\AuthServer.Infrastructure.dll
+C:\Users\matheus.jsouza\Desktop\services\src\Infrastructure\AuthServer.Infrastructure\obj\Debug\net10.0\AuthServer.Infrastructure.pdb
+C:\Users\matheus.jsouza\Desktop\services\src\Infrastructure\AuthServer.Infrastructure\obj\Debug\net10.0\ref\AuthServer.Infrastructure.dll

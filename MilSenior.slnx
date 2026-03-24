@@ -1,0 +1,16 @@
+<Solution>
+  <Folder Name="/1 - Api/">
+    <Project Path="src/Api/AuthServer.API/AuthServer.API.csproj" />
+  </Folder>
+  <Folder Name="/2 - Application/">
+    <Project Path="src/Application/AuthServer.Application/AuthServer.Application.csproj" />
+  </Folder>
+  <Folder Name="/3 - Domain/">
+    <Project Path="src/Domain/AuthServer.Domain/AuthServer.Domain.csproj" />
+  </Folder>
+  <Folder Name="/4 - Infrastructure/">
+    <Project Path="src/Infrastructure/AuthServer.Infrastructure/AuthServer.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/5 - Shared/" />
+  <Folder Name="/6 - Test/" />
+</Solution>

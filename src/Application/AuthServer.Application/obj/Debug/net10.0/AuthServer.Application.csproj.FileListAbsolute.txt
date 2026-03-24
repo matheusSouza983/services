@@ -1,0 +1,30 @@
+C:\Users\matheus.jsouza\Desktop\new project\src\Application\AuthServer.Application\bin\Debug\net10.0\AuthServer.Application.deps.json
+C:\Users\matheus.jsouza\Desktop\new project\src\Application\AuthServer.Application\bin\Debug\net10.0\AuthServer.Application.dll
+C:\Users\matheus.jsouza\Desktop\new project\src\Application\AuthServer.Application\bin\Debug\net10.0\AuthServer.Application.pdb
+C:\Users\matheus.jsouza\Desktop\new project\src\Application\AuthServer.Application\obj\Debug\net10.0\AuthServer.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\matheus.jsouza\Desktop\new project\src\Application\AuthServer.Application\obj\Debug\net10.0\AuthServer.Application.AssemblyInfoInputs.cache
+C:\Users\matheus.jsouza\Desktop\new project\src\Application\AuthServer.Application\obj\Debug\net10.0\AuthServer.Application.AssemblyInfo.cs
+C:\Users\matheus.jsouza\Desktop\new project\src\Application\AuthServer.Application\obj\Debug\net10.0\AuthServer.Application.csproj.CoreCompileInputs.cache
+C:\Users\matheus.jsouza\Desktop\new project\src\Application\AuthServer.Application\obj\Debug\net10.0\AuthServer.Application.dll
+C:\Users\matheus.jsouza\Desktop\new project\src\Application\AuthServer.Application\obj\Debug\net10.0\refint\AuthServer.Application.dll
+C:\Users\matheus.jsouza\Desktop\new project\src\Application\AuthServer.Application\obj\Debug\net10.0\AuthServer.Application.pdb
+C:\Users\matheus.jsouza\Desktop\new project\src\Application\AuthServer.Application\obj\Debug\net10.0\ref\AuthServer.Application.dll
+C:\Users\matheus.jsouza\Desktop\new project\src\Application\AuthServer.Application\bin\Debug\net10.0\AuthServer.Domain.dll
+C:\Users\matheus.jsouza\Desktop\new project\src\Application\AuthServer.Application\bin\Debug\net10.0\AuthServer.Domain.pdb
+C:\Users\matheus.jsouza\Desktop\new project\src\Application\AuthServer.Application\obj\Debug\net10.0\AuthServer.Application.csproj.AssemblyReference.cache
+C:\Users\matheus.jsouza\Desktop\new project\src\Application\AuthServer.Application\obj\Debug\net10.0\AuthServ.F8ED7107.Up2Date
+C:\Users\matheus.jsouza\Desktop\services\src\Application\AuthServer.Application\bin\Debug\net10.0\AuthServer.Application.deps.json
+C:\Users\matheus.jsouza\Desktop\services\src\Application\AuthServer.Application\bin\Debug\net10.0\AuthServer.Application.dll
+C:\Users\matheus.jsouza\Desktop\services\src\Application\AuthServer.Application\bin\Debug\net10.0\AuthServer.Application.pdb
+C:\Users\matheus.jsouza\Desktop\services\src\Application\AuthServer.Application\bin\Debug\net10.0\AuthServer.Domain.dll
+C:\Users\matheus.jsouza\Desktop\services\src\Application\AuthServer.Application\bin\Debug\net10.0\AuthServer.Domain.pdb
+C:\Users\matheus.jsouza\Desktop\services\src\Application\AuthServer.Application\obj\Debug\net10.0\AuthServer.Application.csproj.AssemblyReference.cache
+C:\Users\matheus.jsouza\Desktop\services\src\Application\AuthServer.Application\obj\Debug\net10.0\AuthServer.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\matheus.jsouza\Desktop\services\src\Application\AuthServer.Application\obj\Debug\net10.0\AuthServer.Application.AssemblyInfoInputs.cache
+C:\Users\matheus.jsouza\Desktop\services\src\Application\AuthServer.Application\obj\Debug\net10.0\AuthServer.Application.AssemblyInfo.cs
+C:\Users\matheus.jsouza\Desktop\services\src\Application\AuthServer.Application\obj\Debug\net10.0\AuthServer.Application.csproj.CoreCompileInputs.cache
+C:\Users\matheus.jsouza\Desktop\services\src\Application\AuthServer.Application\obj\Debug\net10.0\AuthServ.F8ED7107.Up2Date
+C:\Users\matheus.jsouza\Desktop\services\src\Application\AuthServer.Application\obj\Debug\net10.0\AuthServer.Application.dll
+C:\Users\matheus.jsouza\Desktop\services\src\Application\AuthServer.Application\obj\Debug\net10.0\refint\AuthServer.Application.dll
+C:\Users\matheus.jsouza\Desktop\services\src\Application\AuthServer.Application\obj\Debug\net10.0\AuthServer.Application.pdb
+C:\Users\matheus.jsouza\Desktop\services\src\Application\AuthServer.Application\obj\Debug\net10.0\ref\AuthServer.Application.dll
