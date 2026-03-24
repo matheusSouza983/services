@@ -36,16 +36,17 @@ public sealed class AuthService : IAuthService
             return null;
         }
 
-        var normalized = identifier.ToLowerInvariant();
+        var now = DateTimeOffset.UtcNow;
+        var normalized = NormalizeIdentity(identifier);
 
         var user = await _dbContext.Users
             .Include(current => current.UserRoles)
             .ThenInclude(current => current.Role)
             .FirstOrDefaultAsync(
-                current => current.UserName.ToLower() == normalized || current.Email.ToLower() == normalized,
+                current => current.NormalizedUserName == normalized || current.NormalizedEmail == normalized,
                 cancellationToken);
 
-        if (user is null || !user.IsActive || user.IsLocked)
+        if (user is null || !CanAuthenticate(user, now))
         {
             return null;
         }
@@ -56,7 +57,7 @@ public sealed class AuthService : IAuthService
             return null;
         }
 
-        return await IssueTokensAsync(user, cancellationToken);
+        return await IssueTokensAsync(user, now, cancellationToken);
     }
 
     public async Task<LoginResult?> RefreshAsync(RefreshTokenRequest request, CancellationToken cancellationToken = default)
@@ -93,7 +94,7 @@ public sealed class AuthService : IAuthService
         }
 
         var user = existingToken.User;
-        if (!user.IsActive || user.IsLocked)
+        if (!CanAuthenticate(user, now))
         {
             return null;
         }
@@ -122,33 +123,27 @@ public sealed class AuthService : IAuthService
 
     private async Task RevokeTokenFamilyAsync(RefreshToken rootToken, CancellationToken cancellationToken)
     {
-        var tokensById = await _dbContext.RefreshTokens
-            .Where(current => current.UserId == rootToken.UserId)
-            .ToDictionaryAsync(current => current.Id, cancellationToken);
-
         var revokedAny = false;
         var revokedAtUtc = DateTimeOffset.UtcNow;
-        var queue = new Queue<Guid>();
-        queue.Enqueue(rootToken.Id);
+        var currentToken = rootToken;
 
-        while (queue.Count > 0)
+        while (currentToken is not null)
         {
-            var tokenId = queue.Dequeue();
-            if (!tokensById.TryGetValue(tokenId, out var token))
+            if (currentToken.RevokedAtUtc is null)
             {
-                continue;
-            }
-
-            if (token.RevokedAtUtc is null)
-            {
-                token.RevokedAtUtc = revokedAtUtc;
+                currentToken.RevokedAtUtc = revokedAtUtc;
                 revokedAny = true;
             }
 
-            if (token.ReplacedByTokenId.HasValue)
+            if (!currentToken.ReplacedByTokenId.HasValue)
             {
-                queue.Enqueue(token.ReplacedByTokenId.Value);
+                break;
             }
+
+            currentToken = await _dbContext.RefreshTokens
+                .FirstOrDefaultAsync(
+                    current => current.Id == currentToken.ReplacedByTokenId.Value && current.UserId == rootToken.UserId,
+                    cancellationToken);
         }
 
         if (revokedAny)
@@ -157,10 +152,11 @@ public sealed class AuthService : IAuthService
         }
     }
 
-    private async Task<LoginResult> IssueTokensAsync(User user, CancellationToken cancellationToken)
+    private async Task<LoginResult> IssueTokensAsync(User user, DateTimeOffset now, CancellationToken cancellationToken)
     {
+        ClearExpiredLockout(user, now);
+
         var refreshTokenRaw = GenerateRefreshToken();
-        var now = DateTimeOffset.UtcNow;
         var refreshExpiresAtUtc = now.AddDays(_jwtOptions.RefreshTokenDays);
         var refreshToken = new RefreshToken
         {
@@ -177,26 +173,15 @@ public sealed class AuthService : IAuthService
         user.UpdatedAtUtc = now;
         await _dbContext.SaveChangesAsync(cancellationToken);
 
-        var roles = user.UserRoles.Select(current => current.Role.Name).Distinct().ToArray();
         var expiresAtUtc = DateTimeOffset.UtcNow.AddMinutes(_jwtOptions.AccessTokenMinutes);
-        var accessToken = GenerateAccessToken(user.Id, user.UserName, user.Email, roles, expiresAtUtc);
-
-        return new LoginResult
-        {
-            AccessToken = accessToken,
-            RefreshToken = refreshTokenRaw,
-            ExpiresAtUtc = expiresAtUtc,
-            RefreshTokenExpiresAtUtc = refreshExpiresAtUtc,
-            UserId = user.Id,
-            UserName = user.UserName,
-            Email = user.Email,
-            Roles = roles
-        };
+        return CreateLoginResult(user, refreshTokenRaw, refreshExpiresAtUtc, expiresAtUtc);
     }
 
     private async Task<LoginResult> RotateAndIssueTokensAsync(User user, RefreshToken currentToken, CancellationToken cancellationToken)
     {
         var now = DateTimeOffset.UtcNow;
+        ClearExpiredLockout(user, now);
+
         var newRefreshTokenRaw = GenerateRefreshToken();
         var newRefreshExpiresAtUtc = now.AddDays(_jwtOptions.RefreshTokenDays);
 
@@ -218,21 +203,55 @@ public sealed class AuthService : IAuthService
         user.UpdatedAtUtc = now;
         await _dbContext.SaveChangesAsync(cancellationToken);
 
-        var roles = user.UserRoles.Select(current => current.Role.Name).Distinct().ToArray();
         var accessExpiresAtUtc = now.AddMinutes(_jwtOptions.AccessTokenMinutes);
+        return CreateLoginResult(user, newRefreshTokenRaw, newRefreshExpiresAtUtc, accessExpiresAtUtc);
+    }
+
+    private LoginResult CreateLoginResult(User user, string refreshToken, DateTimeOffset refreshExpiresAtUtc, DateTimeOffset accessExpiresAtUtc)
+    {
+        var roles = user.UserRoles.Select(current => current.Role.Name).Distinct().ToArray();
         var accessToken = GenerateAccessToken(user.Id, user.UserName, user.Email, roles, accessExpiresAtUtc);
 
         return new LoginResult
         {
             AccessToken = accessToken,
-            RefreshToken = newRefreshTokenRaw,
+            RefreshToken = refreshToken,
             ExpiresAtUtc = accessExpiresAtUtc,
-            RefreshTokenExpiresAtUtc = newRefreshExpiresAtUtc,
+            RefreshTokenExpiresAtUtc = refreshExpiresAtUtc,
             UserId = user.Id,
             UserName = user.UserName,
             Email = user.Email,
             Roles = roles
         };
+    }
+
+    private static bool CanAuthenticate(User? user, DateTimeOffset now)
+    {
+        if (user is null || !user.IsActive)
+        {
+            return false;
+        }
+
+        if (!user.IsLocked)
+        {
+            return true;
+        }
+
+        return user.LockoutEndUtc.HasValue && user.LockoutEndUtc.Value <= now;
+    }
+
+    private static string NormalizeIdentity(string value)
+    {
+        return value.Trim().ToUpperInvariant();
+    }
+
+    private static void ClearExpiredLockout(User user, DateTimeOffset now)
+    {
+        if (user.IsLocked && user.LockoutEndUtc.HasValue && user.LockoutEndUtc.Value <= now)
+        {
+            user.IsLocked = false;
+            user.LockoutEndUtc = null;
+        }
     }
 
     private string GenerateAccessToken(Guid userId, string userName, string email, IReadOnlyCollection<string> roles, DateTimeOffset expiresAtUtc)

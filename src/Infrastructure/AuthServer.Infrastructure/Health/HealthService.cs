@@ -1,6 +1,5 @@
 using AuthServer.Application.Health;
 using AuthServer.Infrastructure.Persistence;
-using Microsoft.EntityFrameworkCore;
 
 namespace AuthServer.Infrastructure.Health;
 
@@ -24,21 +23,11 @@ public class HealthService : IHealthService
         try
         {
             result.DatabaseReachable = await _db.Database.CanConnectAsync();
-            if (result.DatabaseReachable)
-            {
-                result.Users = await _db.Users.LongCountAsync();
-                result.AppliedMigrations = _db.Database.GetAppliedMigrations();
-                result.Status = "Healthy";
-            }
-            else
-            {
-                result.Status = "Degraded";
-            }
+            result.Status = result.DatabaseReachable ? "Healthy" : "Degraded";
         }
-        catch (Exception ex)
+        catch
         {
             result.Status = "Degraded";
-            result.DbError = ex.Message;
         }
 
         return result;

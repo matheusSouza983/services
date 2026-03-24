@@ -1,4 +1,4 @@
-namespace AuthServer.Infrastructure.Auth;
+namespace AuthServer.Application.Auth;
 
 public sealed class JwtOptions
 {

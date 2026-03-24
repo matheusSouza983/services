@@ -1,11 +1,14 @@
 using AuthServer.Application.ApiResponses;
 using AuthServer.Application.Auth;
+using AuthServer.API.Authorization;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AuthServer.API.Controllers;
 
 [ApiController]
 [Route("auth")]
+[Authorize(Policy = AuthorizationPolicies.AuthenticatedOnly)]
 public sealed class AuthController : ControllerBase
 {
     private readonly IAuthService _authService;
@@ -16,6 +19,7 @@ public sealed class AuthController : ControllerBase
     }
 
     [HttpPost("login")]
+    [AllowAnonymous]
     [ProducesResponseType(typeof(ApiResponse<LoginResult>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ValidationErrorResponse), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status401Unauthorized)]
@@ -38,6 +42,7 @@ public sealed class AuthController : ControllerBase
     }
 
     [HttpPost("refresh")]
+    [AllowAnonymous]
     [ProducesResponseType(typeof(ApiResponse<LoginResult>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ValidationErrorResponse), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status401Unauthorized)]

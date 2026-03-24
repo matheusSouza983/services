@@ -30,9 +30,9 @@ public class ExceptionHandlerMiddleware
     {
         var (statusCode, errorCode, message) = ex switch
         {
-            ArgumentException => (StatusCodes.Status400BadRequest, "bad_request", ex.Message),
+            ArgumentException => (StatusCodes.Status400BadRequest, "bad_request", "The request is invalid."),
             UnauthorizedAccessException => (StatusCodes.Status403Forbidden, "forbidden", "You do not have permission to perform this action."),
-            KeyNotFoundException => (StatusCodes.Status404NotFound, "not_found", ex.Message),
+            KeyNotFoundException => (StatusCodes.Status404NotFound, "not_found", "The requested resource was not found."),
             _ => (StatusCodes.Status500InternalServerError, "internal_error", "An unexpected error occurred.")
         };
 

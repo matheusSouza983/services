@@ -2,6 +2,7 @@ using AuthServer.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using AuthServer.Application.Auth;
 
 namespace AuthServer.Infrastructure;
 
@@ -15,9 +16,10 @@ public static class DependencyInjection
         services.AddDbContext<AuthDbContext>(options =>
             options.UseSqlite(connectionString));
 
-        services.Configure<Auth.JwtOptions>(configuration.GetSection(Auth.JwtOptions.SectionName));
+        services.AddDataProtection();
 
         services.AddSingleton<Security.IUserPasswordHasher, Security.UserPasswordHasher>();
+        services.AddSingleton<Security.ITotpSecretProtector, Security.DataProtectionTotpSecretProtector>();
         services.AddScoped<Application.Auth.IAuthService, Auth.AuthService>();
 
         services.AddScoped<Application.Health.IHealthService, Health.HealthService>();

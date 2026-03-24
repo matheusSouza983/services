@@ -15,7 +15,15 @@ public sealed class UserConfiguration : IEntityTypeConfiguration<User>
             .HasMaxLength(100)
             .IsRequired();
 
+        builder.Property(current => current.NormalizedUserName)
+            .HasMaxLength(100)
+            .IsRequired();
+
         builder.Property(current => current.Email)
+            .HasMaxLength(255)
+            .IsRequired();
+
+        builder.Property(current => current.NormalizedEmail)
             .HasMaxLength(255)
             .IsRequired();
 
@@ -56,10 +64,10 @@ public sealed class UserConfiguration : IEntityTypeConfiguration<User>
         builder.Property(current => current.UpdatedAtUtc)
             .IsRequired();
 
-        builder.HasIndex(current => current.UserName)
+        builder.HasIndex(current => current.NormalizedUserName)
             .IsUnique();
 
-        builder.HasIndex(current => current.Email)
+        builder.HasIndex(current => current.NormalizedEmail)
             .IsUnique();
     }
 }

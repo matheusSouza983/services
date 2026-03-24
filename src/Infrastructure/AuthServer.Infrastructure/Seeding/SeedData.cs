@@ -70,6 +70,9 @@ public static class SeedData
                 db.Users.Add(adminUser);
             }
 
+            adminUser.NormalizedUserName = adminUser.UserName.Trim().ToUpperInvariant();
+            adminUser.NormalizedEmail = adminUser.Email.Trim().ToUpperInvariant();
+
             var testUser = await db.Users.FirstOrDefaultAsync(current => current.UserName == "test");
             if (testUser is null)
             {
@@ -88,6 +91,9 @@ public static class SeedData
                 testUser.PasswordHash = hasher.HashPassword(testUser, "Test1234");
                 db.Users.Add(testUser);
             }
+
+            testUser.NormalizedUserName = testUser.UserName.Trim().ToUpperInvariant();
+            testUser.NormalizedEmail = testUser.Email.Trim().ToUpperInvariant();
 
             if (!await db.UserRoles.AnyAsync(current => current.UserId == adminUser.Id && current.RoleId == adminRole.Id))
             {
