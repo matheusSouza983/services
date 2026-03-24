@@ -80,7 +80,14 @@ public sealed class AuthService : IAuthService
             return null;
         }
 
-        if (existingToken.RevokedAtUtc is not null || existingToken.ExpiresAtUtc <= now)
+        if (existingToken.RevokedAtUtc is not null)
+        {
+            // Reuse detection: if a revoked refresh token is presented, revoke its whole family.
+            await RevokeTokenFamilyAsync(existingToken, cancellationToken);
+            return null;
+        }
+
+        if (existingToken.ExpiresAtUtc <= now)
         {
             return null;
         }
@@ -92,6 +99,62 @@ public sealed class AuthService : IAuthService
         }
 
         return await RotateAndIssueTokensAsync(user, existingToken, cancellationToken);
+    }
+
+    public async Task RevokeAsync(RevokeTokenRequest request, CancellationToken cancellationToken = default)
+    {
+        if (string.IsNullOrWhiteSpace(request.RefreshToken))
+        {
+            return;
+        }
+
+        var tokenHash = ComputeTokenHash(request.RefreshToken);
+        var currentToken = await _dbContext.RefreshTokens
+            .FirstOrDefaultAsync(current => current.TokenHash == tokenHash, cancellationToken);
+
+        if (currentToken is null)
+        {
+            return;
+        }
+
+        await RevokeTokenFamilyAsync(currentToken, cancellationToken);
+    }
+
+    private async Task RevokeTokenFamilyAsync(RefreshToken rootToken, CancellationToken cancellationToken)
+    {
+        var tokensById = await _dbContext.RefreshTokens
+            .Where(current => current.UserId == rootToken.UserId)
+            .ToDictionaryAsync(current => current.Id, cancellationToken);
+
+        var revokedAny = false;
+        var revokedAtUtc = DateTimeOffset.UtcNow;
+        var queue = new Queue<Guid>();
+        queue.Enqueue(rootToken.Id);
+
+        while (queue.Count > 0)
+        {
+            var tokenId = queue.Dequeue();
+            if (!tokensById.TryGetValue(tokenId, out var token))
+            {
+                continue;
+            }
+
+            if (token.RevokedAtUtc is null)
+            {
+                token.RevokedAtUtc = revokedAtUtc;
+                revokedAny = true;
+            }
+
+            if (token.ReplacedByTokenId.HasValue)
+            {
+                queue.Enqueue(token.ReplacedByTokenId.Value);
+            }
+        }
+
+        if (revokedAny)
+        {
+            await _dbContext.SaveChangesAsync(cancellationToken);
+        }
     }
 
     private async Task<LoginResult> IssueTokensAsync(User user, CancellationToken cancellationToken)

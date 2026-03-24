@@ -58,4 +58,14 @@ public sealed class AuthController : ControllerBase
 
         return Ok(result);
     }
+
+    [HttpPost("revoke")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ValidationErrorResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> Revoke([FromBody] RevokeTokenRequest request, CancellationToken cancellationToken)
+    {
+        await _authService.RevokeAsync(request, cancellationToken);
+        return NoContent();
+    }
 }
