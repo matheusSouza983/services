@@ -40,6 +40,15 @@ msbuild.wrn
 appsettings.Local.json
 appsettings.*.Local.json
 
+# Local SQLite databases
+*.db
+*.sqlite
+*.sqlite3
+*.db-shm
+*.db-wal
+*.sqlite-shm
+*.sqlite-wal
+
 
 prompts/
 AGENTS.md
