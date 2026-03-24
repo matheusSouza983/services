@@ -16,7 +16,10 @@ public static class DependencyInjection
             options.UseSqlite(connectionString));
 
         // Password hasher for users
-        services.AddSingleton<AuthServer.Infrastructure.Security.IUserPasswordHasher, AuthServer.Infrastructure.Security.UserPasswordHasher>();
+        services.AddSingleton<Security.IUserPasswordHasher, Security.UserPasswordHasher>();
+
+        // Health service implementation (exposes Application abstraction)
+        services.AddScoped<AuthServer.Application.Health.IHealthService, AuthServer.Infrastructure.Health.HealthService>();
 
         return services;
     }
