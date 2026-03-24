@@ -1,22 +1,18 @@
+using AuthServer.API.Extensions;
+
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
-builder.Services.AddAuthorization();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services
+    .AddApi(builder.Configuration);
 
 var app = builder.Build();
 
+app.UseApi();
+
+// Apply migrations and seed database only in Development
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    await AuthServer.Infrastructure.Seeding.SeedData.MigrateAndSeedAsync(app);
 }
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
 
 app.Run();
